@@ -3,7 +3,7 @@ const cors = require('cors');
 require('dotenv').config()
 const app = express();
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 // middleware
 app.use(cors());
@@ -30,12 +30,22 @@ async function run() {
 
     const toysCollections = client.db('toy-shop-DB').collection('All-toys')
 
-    app.get('/allToys',async(req,res) =>{
+    app.get('/allToys', async (req,res) =>{
       const cursor = toysCollections.find();
       const result = await cursor.toArray();
-      console.log(result);
       res.send(result);
     })
+
+    app.get('/allToys/:id', async (req,res) =>{
+      const id = req.params.id;
+      console.log(id);
+      const query = {_id: new ObjectId(id)};
+      const result = await toysCollections.findOne(query);
+      res.send(result);
+      console.log(result);
+    })
+
+    
 
 
 
