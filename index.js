@@ -27,14 +27,21 @@ async function run() {
     
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-
+    
     const toysCollections = client.db('toy-shop-DB').collection('All-toys')
-
+    
     app.get('/allToys', async (req,res) =>{
-      const cursor = toysCollections.find();
-      const result = await cursor.toArray();
+      let query = {};
+      if(req.query?.email){
+        query={email: req.query.email}
+      }
+      const result = await toysCollections.find(query).toArray();
       res.send(result);
     })
+    // app.get('/allToys', async (req,res) =>{
+    //   const result = await toysCollections.find().toArray();
+    //   res.send(result);
+    // })
 
     app.get('/allToys/:id', async (req,res) =>{
       const id = req.params.id;
@@ -45,7 +52,13 @@ async function run() {
       console.log(result);
     })
 
-    
+    app.post('/allToys', async (req,res) =>{
+      const addedToy = req.body;
+      console.log(addedToy);
+      const result = await toysCollections.insertOne(addedToy);
+      res.send(result);
+    })
+
 
 
 
