@@ -45,7 +45,6 @@ async function run() {
 
     app.get('/allToys/:id', async (req, res) => {
       const id = req.params.id;
-      console.log(id);
       const query = { _id: new ObjectId(id) };
       const result = await toysCollections.findOne(query);
       res.send(result);
@@ -75,7 +74,6 @@ async function run() {
 
     app.post('/allToys', async (req, res) => {
       const addedToy = req.body;
-      console.log(addedToy);
       const result = await toysCollections.insertOne(addedToy);
       res.send(result);
     })
