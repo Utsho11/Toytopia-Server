@@ -105,7 +105,3 @@ run().catch(console.dir);
 app.get('/', (req, res) => {
   res.send('toy server is running');
 })
-
-app.listen(port, () => {
-  console.log(`toy server is running on : ${port}`);
-})
