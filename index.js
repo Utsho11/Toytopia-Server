@@ -49,7 +49,6 @@ async function run() {
       const query = { _id: new ObjectId(id) };
       const result = await toysCollections.findOne(query);
       res.send(result);
-      console.log(result);
     })
 
     app.put('/allToys/:id', async (req, res) => {
